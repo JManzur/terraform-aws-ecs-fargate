@@ -21,6 +21,8 @@ resource "aws_cloudwatch_log_group" "ecs_execute_command" {
 
   name              = "/aws/ecs/${var.name_prefix}-${var.environment}/ecs-execute-command"
   retention_in_days = var.execute_command_log_retention
+  kms_key_id        = aws_kms_key.ecs_execute_command[0].arn
+  log_group_class   = "INFREQUENT_ACCESS" # One of STANDARD, INFREQUENT_ACCESS
 }
 
 resource "aws_ecs_cluster" "this" {
